@@ -5,8 +5,8 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-const indexRoute = require('./routes/index');
-const productRoute = require('./routes/product');
+const indexRoute = require('./routes/index-route');
+const productRoute = require('./routes/product-route');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
