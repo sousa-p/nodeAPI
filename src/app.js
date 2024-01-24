@@ -4,17 +4,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
-const router = express.Router();
+
+const indexRoute = require('./routes/index');
+const productRoute = require('./routes/product');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const route = router.get('/', (req, res, next) => {
-  res.status(200).send({
-    title: "Node Store API",
-  });
-});
 
-app.use('/', route);
+app.use('/', indexRoute);
+app.use('/product', productRoute);
 
 module.exports = app;
