@@ -21,7 +21,7 @@ const route = router.get('/', (req, res, next) => {
 app.use('/', route);
 app.listen(port);
 
-const normalizePort = (val) => {
+function normalizePort(val) {
   const port = parseInt(val, 10);
 
   if (isNaN(port)) return val;
