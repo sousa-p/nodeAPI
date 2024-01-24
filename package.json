@@ -1,5 +1,5 @@
 {
-  "name": "nodeapi",
+  "name": "nodestoreapi",
   "version": "1.0.0",
   "description": "A simple Node.js API",
   "main": "index.js",

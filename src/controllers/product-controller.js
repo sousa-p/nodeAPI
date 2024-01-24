@@ -9,7 +9,6 @@ exports.get = (req, res, next) => {
   });
 };
 
-
 exports.put = (req, res, next) => {
   const id = req.params.id;
   res.status(200).send({
@@ -18,11 +17,9 @@ exports.put = (req, res, next) => {
   });
 };
 
-
 exports.post = (req, res, next) => {
   res.status(201).send(req.body);
 };
-
 
 exports.delete = (req, res, next) => {
   res.status(200).send(req.body);
