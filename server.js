@@ -19,7 +19,9 @@ const route = router.get('/', (req, res, next) => {
 });
 
 app.use('/', route);
-app.listen(port);
+
+server.listen(port);
+server.on('error', onError);
 
 function normalizePort(val) {
   const port = parseInt(val, 10);
@@ -29,4 +31,21 @@ function normalizePort(val) {
   if (port >= 0) return port;
 
   return false;
+}
+
+function onError(error) {
+  if (error.syscall !== 'listen') throw error;
+
+  const bind = ((typeof port === 'string') ? 'Pipe ' : 'Port ') + port;
+
+  switch (error.code) {
+    case 'EACCESS':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+    default:
+      throw error;
+  }
 }
