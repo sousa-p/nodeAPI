@@ -7,7 +7,7 @@ var swaggerUi = require('swagger-ui-express');
 
 var fs = require('fs');
 var jsyaml = require('js-yaml');
-var spec = fs.readFileSync('/home/sousa/Documents/Projetos/nodeAPI/src/docs/swagger.yml', 'utf8');
+var spec = fs.readFileSync('./docs/swagger.yml', 'utf8');
 var swaggerDocument = jsyaml.load(spec);
 
 
