@@ -36,6 +36,21 @@ exports.getById = (req, res, next) => {
     })
 }
 
+exports.getByTag = (req, res, next) => {
+  const tag = req.params.tag;
+
+  Product
+    .find({
+      tags: tag,
+      active: true
+    })
+    .then(p => {
+      return res.status(200).send(p)
+    })
+    .catch((e) => {
+      return res.status(400).send(e);
+    })
+}
 
 exports.getAll = (req, res, next) => {
   Product
