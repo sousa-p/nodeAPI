@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 
 const app = express();
 
+const ProductModel = require('./models/product-model');
+
 const indexRoute = require('./routes/index-route');
 const productRoute = require('./routes/product-route');
 
