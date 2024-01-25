@@ -3,15 +3,22 @@
 
 const mongoose = require('mongoose');
 const Product = mongoose.model('Product');
+const repository = require('../repositories/product-repository');
+
+exports.getAll = (req, res, next) => {
+  repository.getAll()
+    .then(p => {
+      return res.status(200).send(p)
+    })
+    .catch((e) => {
+      return res.status(400).send(e);
+    })
+};
 
 exports.getBySlug = (req, res, next) => {
   const slug = req.params.slug;
 
-  Product
-    .findOne({
-      slug: slug,
-      active: true
-    }, 'title price slug tags description')
+  repository.getBySlug(slug)
     .then(p => {
       if (p) return res.status(200).send(p)
       return res.status(404).send({ message: "Product not found" });
@@ -25,8 +32,7 @@ exports.getBySlug = (req, res, next) => {
 exports.getById = (req, res, next) => {
   const id = req.params.id;
 
-  Product
-    .findById(id)
+  repository.getById(id)
     .then(p => {
       if (p) return res.status(200).send(p)
       return res.status(404).send({ message: "Product not found" });
@@ -39,11 +45,7 @@ exports.getById = (req, res, next) => {
 exports.getByTag = (req, res, next) => {
   const tag = req.params.tag;
 
-  Product
-    .find({
-      tags: tag,
-      active: true
-    })
+  repository.getByTag(tag)
     .then(p => {
       return res.status(200).send(p)
     })
@@ -52,24 +54,12 @@ exports.getByTag = (req, res, next) => {
     })
 }
 
-exports.getAll = (req, res, next) => {
-  Product
-    .find({ active: true }, 'title price slug')
-    .then(p => {
-      return res.status(200).send(p)
-    })
-    .catch((e) => {
-      return res.status(400).send(e);
-    })
-};
-
 exports.post = (req, res, next) => {
-  let product = new Product(req.body);
+  const data = req.body;
 
-  product
-    .save()
-    .then((_) => {
-      return res.status(201).send(product);
+  repository.post(data)
+    .then((p) => {
+      return res.status(201).send(p);
     })
     .catch((e) => {
       return res.status(400).send(e);
@@ -78,16 +68,9 @@ exports.post = (req, res, next) => {
 
 exports.put = (req, res, next) => {
   const id = req.params.id;
+  const data = req.body;
 
-  Product
-    .findByIdAndDelete(id, {
-      $set: {
-        title: req.body.title,
-        description: req.body.description,
-        price: req.body.price,
-        slug: req.body.slug
-      }
-    })
+  repository.put(id, data)
     .then((_) => {
       res.status(200).send({
         message: "The product has been updated successfully!"
@@ -101,8 +84,7 @@ exports.put = (req, res, next) => {
 exports.delete = (req, res, next) => {
   const id = req.params.id;
 
-  Product
-    .findByIdAndDelete(id)
+  repository.delete(id)
     .then((_) => {
       res.status(200).send({
         message: "The product has been removed successfully!"
