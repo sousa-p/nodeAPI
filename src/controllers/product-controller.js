@@ -63,11 +63,24 @@ exports.getAll = (req, res, next) => {
     })
 };
 
+exports.post = (req, res, next) => {
+  let product = new Product(req.body);
+
+  product
+    .save()
+    .then((_) => {
+      return res.status(201).send(product);
+    })
+    .catch((e) => {
+      return res.status(400).send(e);
+    })
+};
+
 exports.put = (req, res, next) => {
   const id = req.params.id;
 
   Product
-    .findByIdAndUpdate(id, {
+    .findByIdAndDelete(id, {
       $set: {
         title: req.body.title,
         description: req.body.description,
@@ -85,19 +98,17 @@ exports.put = (req, res, next) => {
     })
 };
 
-exports.post = (req, res, next) => {
-  let product = new Product(req.body);
+exports.delete = (req, res, next) => {
+  const id = req.params.id;
 
-  product
-    .save()
+  Product
+    .findByIdAndDelete(id)
     .then((_) => {
-      return res.status(201).send(product);
+      res.status(200).send({
+        message: "The product has been removed successfully!"
+      });
     })
     .catch((e) => {
       return res.status(400).send(e);
     })
-};
-
-exports.delete = (req, res, next) => {
-  return res.status(200).send(req.body);
 };
