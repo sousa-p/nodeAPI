@@ -13,15 +13,29 @@ exports.getBySlug = (req, res, next) => {
       active: true
     }, 'title price slug tags description')
     .then(p => {
-      if (!p)
-        return res.status(404).send({ message: "Product not found" });
+      if (p) return res.status(200).send(p)
+      return res.status(404).send({ message: "Product not found" });
 
-      return res.status(200).send(p)
     })
     .catch((e) => {
       return res.status(400).send(e);
     })
 };
+
+exports.getById = (req, res, next) => {
+  const id = req.params.id;
+
+  Product
+    .findById(id)
+    .then(p => {
+      if (p) return res.status(200).send(p)
+      return res.status(404).send({ message: "Product not found" });
+    })
+    .catch((e) => {
+      return res.status(400).send(e);
+    })
+}
+
 
 exports.getAll = (req, res, next) => {
   Product
