@@ -3,6 +3,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+var swaggerUi = require('swagger-ui-express');
+
+var fs = require('fs');
+var jsyaml = require('js-yaml');
+var spec = fs.readFileSync('/home/sousa/Documents/Projetos/nodeAPI/src/docs/swagger.yml', 'utf8');
+var swaggerDocument = jsyaml.load(spec);
+
 
 const app = express();
 
@@ -28,5 +35,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/', indexRoute);
 app.use('/product', productRoute);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 module.exports = app;

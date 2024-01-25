@@ -1,0 +1,89 @@
+openapi: '3.0.2'
+info:
+  title: Node Store API
+  version: '1.0'
+paths:
+  /:
+    get:
+      responses:
+        '200':
+          description: OK
+  /product/:
+    get:
+      tags:
+        - Product
+      description: 'Get all products:'
+      parameters: []
+      responses:
+        '200':
+          description: OK
+    post:
+      tags:
+        - Product
+      description: 'Create a product:'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                price:
+                  type: number
+                description:
+                  type: string
+                active:
+                  type: boolean
+                slug:
+                  type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: ERROR
+  /product/{id}:
+    delete:
+      tags:
+        - Product
+      description: 'Delete one product with ID:'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: THe product ID 
+      responses:
+        '200':
+          description: OK
+    put:
+      tags:
+        - Product
+      description: 'Update one product with ID:'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: THe product ID 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                price:
+                  type: number
+                description:
+                  type: string
+                slug:
+                  type: string
+      responses:
+        '200':
+          description: OK
