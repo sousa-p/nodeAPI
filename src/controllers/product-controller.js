@@ -65,16 +65,31 @@ exports.getAll = (req, res, next) => {
 
 exports.put = (req, res, next) => {
   const id = req.params.id;
-  return res.status(200).send({
-    id: id,
-    item: req.body
-  });
+
+  Product
+    .findByIdAndUpdate(id, {
+      $set: {
+        title: req.body.title,
+        description: req.body.description,
+        price: req.body.price,
+        slug: req.body.slug
+      }
+    })
+    .then((_) => {
+      res.status(200).send({
+        message: "The product has been updated successfully!"
+      });
+    })
+    .catch((e) => {
+      return res.status(400).send(e);
+    })
 };
 
 exports.post = (req, res, next) => {
-  let product;
-  product = new Product(req.body);
-  product.save()
+  let product = new Product(req.body);
+
+  product
+    .save()
     .then((_) => {
       return res.status(201).send(product);
     })
