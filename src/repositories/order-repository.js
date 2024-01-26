@@ -5,7 +5,9 @@ const mongoose = require('mongoose');
 const Order = mongoose.model('Order');
 
 exports.getAll = () => {
-  let orders = Order.find({});
+  let orders = Order.find({})
+    .populate('customer', 'name')
+    .populate('items.product', 'title');
   return orders;
 }
 
