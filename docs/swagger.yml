@@ -90,6 +90,15 @@ paths:
         '200':
           description: OK
   /customer/:
+    get:
+      tags:
+        - Customer
+      description: Get all Customers
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: ERROR
     post:
       tags:
         - Customer
@@ -107,6 +116,22 @@ paths:
                   type: string
                 password:
                   type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: ERROR
+  /customer/id/{id}:
+    get:
+      tags:
+        - Customer
+      description: Get one Customer by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: OK
