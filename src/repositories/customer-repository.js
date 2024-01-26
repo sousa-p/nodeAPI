@@ -19,7 +19,7 @@ exports.post = async (data) => {
 
   customer.name = data.name;
   customer.email = data.email;
-  customer.password = await bcrypt.hash(data.password, 12);
+  customer.password = await bcrypt.hash(data.password + global.SALT_KEY, 12);
 
   return customer.save();
 }

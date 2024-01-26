@@ -21,8 +21,9 @@ const indexRoute = require('./routes/index-route');
 const productRoute = require('./routes/product-route');
 const customerRoute = require('./routes/customer-route');
 const orderRoute = require('./routes/order-route');
+const config = require('./config');
 
-mongoose.connect('mongodb://localhost:27017/nodeStore');
+mongoose.connect(config.connectionString);
 
 const db = mongoose.connection;
 
