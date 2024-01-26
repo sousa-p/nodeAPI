@@ -1,6 +1,7 @@
 'use strict'
 
 const ValidationContract = require('../validators/fluent-validator');
+const emailService = require('../services/email-service');
 const repository = require('../repositories/customer-repository');
 
 exports.getAll = async (req, res, next) => {
@@ -33,6 +34,9 @@ exports.post = async (req, res, next) => {
 
   try {
     const customer = await repository.post(data);
+
+    emailService.send(customer.email, 'Bem vindo a Node Store', global.EMAIL_TMPL.replace('{0}', customer.name));
+
     return res.status(201).send({ message: 'The customer has been created successfully!' });
   } catch (e) {
     return res.status(400).send(e);
