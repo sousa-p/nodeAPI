@@ -43,7 +43,7 @@ paths:
           description: OK
         '400':
           description: ERROR
-  /product/{id}:
+  /product/id/{id}:
     delete:
       tags:
         - Product

@@ -37,12 +37,12 @@ exports.post = (data) => {
 
 exports.put = (id, data) => {
   return Product
-    .findByIdAndDelete(id, {
+    .findByIdAndUpdate(id, {
       $set: {
         title: data.title,
         description: data.description,
         price: data.price,
-        slug: data.slug
+        slug: data.slug,
       }
     });
 }
