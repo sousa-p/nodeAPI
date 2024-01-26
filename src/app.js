@@ -15,6 +15,7 @@ const app = express();
 
 const CustomerModel = require('./models/customer-model');
 const ProductModel = require('./models/product-model');
+const OrderModel = require('./models/product-model');
 
 const indexRoute = require('./routes/index-route');
 const productRoute = require('./routes/product-route');
