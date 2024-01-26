@@ -10,7 +10,7 @@ ValidationContract.prototype.errors = () => errors;
 
 ValidationContract.prototype.clear = () => errors = [];
 
-ValidationContract.prototype.isValid = () => errors.length == 0;
+ValidationContract.prototype.isValid = () => errors.length === 0;
 
 ValidationContract.prototype.isRequired = (value, message) => {
   if (!value || value.length <= 0)
