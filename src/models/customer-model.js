@@ -13,7 +13,8 @@ const schema = new Schema({
     type: String,
     required: true,
     trim: true,
-    index: true
+    match: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
+    index: true,
   },
   password: {
     type: String,

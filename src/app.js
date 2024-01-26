@@ -19,6 +19,7 @@ const OrderModel = require('./models/product-model');
 
 const indexRoute = require('./routes/index-route');
 const productRoute = require('./routes/product-route');
+const customerRoute = require('./routes/customer-route');
 
 mongoose.connect('mongodb://localhost:27017/nodeStore');
 
@@ -37,6 +38,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/', indexRoute);
 app.use('/product', productRoute);
+app.use('/customer', customerRoute);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 module.exports = app;
