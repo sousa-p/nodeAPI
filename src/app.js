@@ -13,6 +13,7 @@ var swaggerDocument = jsyaml.load(spec);
 
 const app = express();
 
+const CustomerModel = require('./models/customer-model');
 const ProductModel = require('./models/product-model');
 
 const indexRoute = require('./routes/index-route');
