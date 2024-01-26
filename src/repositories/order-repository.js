@@ -1,15 +1,15 @@
 'use strict';
 
-const guid = require('guide');
+const guid = require('guid');
 const mongoose = require('mongoose');
 const Order = mongoose.model('Order');
 
-exports.getAll = async (data) => {
+exports.getAll = () => {
   let orders = Order.find({});
   return orders;
 }
 
-exports.post = async (data) => {
+exports.post = (data) => {
   let order = new Order();
 
   order.customer = data.customer;

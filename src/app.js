@@ -15,11 +15,12 @@ const app = express();
 
 const CustomerModel = require('./models/customer-model');
 const ProductModel = require('./models/product-model');
-const OrderModel = require('./models/product-model');
+const OrderModel = require('./models/order-model');
 
 const indexRoute = require('./routes/index-route');
 const productRoute = require('./routes/product-route');
 const customerRoute = require('./routes/customer-route');
+const orderRoute = require('./routes/order-route');
 
 mongoose.connect('mongodb://localhost:27017/nodeStore');
 
@@ -39,6 +40,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/', indexRoute);
 app.use('/product', productRoute);
 app.use('/customer', customerRoute);
+app.use('/order', orderRoute);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 module.exports = app;
