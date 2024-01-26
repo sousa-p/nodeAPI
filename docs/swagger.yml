@@ -112,3 +112,44 @@ paths:
           description: OK
         '400':
           description: ERROR
+  /order/:
+    get:
+      tags:
+        - Order
+      description: Get all orders
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: ERROR
+    post:
+      tags:
+        - Order
+      description: Create new Order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer:
+                  type: string
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      quantity:
+                        type: integer
+                        minimum: 1
+                      price:
+                        type: number
+                        minimum: 0
+                      product:
+                        type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: ERROR
