@@ -10,7 +10,7 @@ services:
     image: node:20.5.1
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     ports:
       - "3000:3000"
     depends_on:
