@@ -24,7 +24,8 @@ exports.login = async (req, res, next) => {
     const payload = {
       _id: customer._id,
       email: customer.email,
-      name: customer.name
+      name: customer.name,
+      role: customer.role
     }
 
     return res.status(200).send({ data: payload, jwt: authService.generateToken(payload) });
@@ -43,7 +44,8 @@ exports.refresh = async (req, res, next) => {
     const payload = {
       _id: customer._id,
       email: customer.email,
-      name: customer.name
+      name: customer.name,
+      role: customer.role
     }
 
     return res.status(200).send({ data: payload, jwt: authService.generateToken(payload) });
