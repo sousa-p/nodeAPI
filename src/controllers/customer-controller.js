@@ -3,6 +3,35 @@
 const ValidationContract = require('../validators/fluent-validator');
 const emailService = require('../services/email-service');
 const repository = require('../repositories/customer-repository');
+const bcrypt = require('bcrypt');
+const authService = require('../services/auth-service');
+
+exports.login = async (req, res, next) => {
+  const data = req.body;
+  const contract = new ValidationContract();
+  contract.isEmail(data.email, 'The customer\'s E-mail must be valid');
+  contract.isRequired(data.password, 'The customer\'s Password is required');
+
+  if (!contract.isValid()) return res.status(400).send(contract.errors());
+
+  try {
+    const customer = await repository.getByEmail(data.email);
+    if (!customer) return res.status(404).send({ message: 'Not found Customer'});
+
+    let isValidLogin = await bcrypt.compare(data.password + global.SALT_KEY, customer.password);
+    if (!isValidLogin) return res.status(400).send({ message: 'Invalid informations' });
+    
+    const payload = {
+      _id: customer._id,
+      email: customer.email,
+      name: customer.name
+    }
+
+    return res.status(201).send({ data: payload, jwt:  authService.generateToken(payload)});
+  } catch (e) {
+    return res.status(400).send(e);
+  }
+}
 
 exports.getAll = async (req, res, next) => {
   try {

@@ -4,6 +4,11 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const Customer = mongoose.model('Customer');
 
+exports.getByEmail = (email) => {
+  let customer = Customer.findOne({email: email});
+  return customer;
+}
+
 exports.getAll = () => {
   let customers = Customer.find({}, 'name email');
   return customers;
