@@ -16,10 +16,29 @@ exports.login = async (req, res, next) => {
 
   try {
     const customer = await repository.getByEmail(data.email);
-    if (!customer) return res.status(404).send({ message: 'Not found Customer'});
+    if (!customer) return res.status(404).send({ message: 'Not found Customer' });
 
     let isValidLogin = await bcrypt.compare(data.password + global.SALT_KEY, customer.password);
     if (!isValidLogin) return res.status(400).send({ message: 'Invalid informations' });
+
+    const payload = {
+      _id: customer._id,
+      email: customer.email,
+      name: customer.name
+    }
+
+    return res.status(200).send({ data: payload, jwt: authService.generateToken(payload) });
+  } catch (e) {
+    return res.status(400).send(e);
+  }
+}
+
+exports.refresh = async (req, res, next) => {
+  try {
+    const token = req.headers['authorization'].split(' ')[1];
+    const data = authService.decodeToken(token);
+
+    const customer = await repository.getById(data._id);
     
     const payload = {
       _id: customer._id,
@@ -27,25 +46,17 @@ exports.login = async (req, res, next) => {
       name: customer.name
     }
 
-    return res.status(201).send({ data: payload, jwt:  authService.generateToken(payload)});
+    return res.status(200).send({ data: payload, jwt: authService.generateToken(payload) });
   } catch (e) {
     return res.status(400).send(e);
   }
 }
 
-exports.getAll = async (req, res, next) => {
+exports.get = async (req, res, next) => {
   try {
-    const customers = await repository.getAll();
-    return res.status(200).send(customers);
-  } catch (e) {
-    return res.status(400).send(e);
-  }
-}
+    const token = req.headers['authorization'].split(' ')[1];
+    const customer = authService.decodeToken(token);
 
-exports.getById = async (req, res, next) => {
-  try {
-    const id = req.params.id;
-    const customer = await repository.getById(id);
     return res.status(200).send(customer);
   } catch (e) {
     return res.status(400).send(e);

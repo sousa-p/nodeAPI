@@ -16,6 +16,8 @@ paths:
           description: OK
   /product/:
     get:
+      security:
+        - JWT: []
       tags:
         - Product
       description: 'Get all products:'
@@ -23,7 +25,11 @@ paths:
       responses:
         '200':
           description: OK
+        '401':
+          description: RESTRICTED ACCESS ERROR
     post:
+      security:
+        - JWT: []
       tags:
         - Product
       description: 'Create a product:'
@@ -45,8 +51,6 @@ paths:
                   type: boolean
                 slug:
                   type: string
-      security:
-        - JWT: []
       responses:
         '200':
           description: OK
@@ -56,6 +60,8 @@ paths:
           description: RESTRICTED ACCESS ERROR
   /product/id/{id}:
     delete:
+      security:
+        - JWT: []
       tags:
         - Product
       description: 'Delete one product with ID:'
@@ -69,7 +75,11 @@ paths:
       responses:
         '200':
           description: OK
+        '401':
+          description: RESTRICTED ACCESS ERROR
     put:
+      security:
+        - JWT: []
       tags:
         - Product
       description: 'Update one product with ID:'
@@ -99,11 +109,15 @@ paths:
       responses:
         '200':
           description: OK
+        '401':
+          description: RESTRICTED ACCESS ERROR
   /customer/:
     get:
+      security:
+        - JWT: []
       tags:
         - Customer
-      description: Get all Customers
+      description: Get infos Customers
       responses:
         '200':
           description: OK
@@ -150,26 +164,28 @@ paths:
         responses:
           '200':
             description: OK
+          '404':
+            description: CUSTOMER NOT FOUND
           '400':
             description: ERROR
-  /customer/id/{id}:
-    get:
+  /customer/refresh:
+    post:
+      security:
+        - JWT: []
       tags:
         - Customer
-      description: Get one Customer by ID
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
+      description: Login Customer
       responses:
         '200':
           description: OK
+        '404':
+          description: CUSTOMER NOT FOUND
         '400':
           description: ERROR
   /order/:
     get:
+      security:
+        - JWT: []
       tags:
         - Order
       description: Get all orders
@@ -179,6 +195,8 @@ paths:
         '400':
           description: ERROR
     post:
+      security:
+        - JWT: []
       tags:
         - Order
       description: Create new Order
@@ -189,8 +207,6 @@ paths:
             schema:
               type: object
               properties:
-                customer:
-                  type: string
                 items:
                   type: array
                   items:
