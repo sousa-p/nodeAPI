@@ -2,6 +2,12 @@ openapi: '3.0.2'
 info:
   title: Node Store API
   version: '1.0'
+components:
+  securitySchemes:
+    JWT:
+      type: apiKey
+      in: header
+      name: Authorization
 paths:
   /:
     get:
@@ -39,11 +45,15 @@ paths:
                   type: boolean
                 slug:
                   type: string
+      security:
+        - JWT: []
       responses:
         '200':
           description: OK
         '400':
           description: ERROR
+        '401':
+          description: RESTRICTED ACCESS ERROR
   /product/id/{id}:
     delete:
       tags:
